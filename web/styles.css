@@ -2,18 +2,23 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #267ae9;
     text-align: center;
 }
 
 header {
-    background-color: #007bff;
+    background-color: #000000;
     color: white;
+    padding: 10px;
+}
+header:hover {
+    background-color: rgb(27, 27, 27);
+    color: rgb(30, 30, 224);
     padding: 10px;
 }
 
 nav {
-    background-color: #004080;
+    background-color: #e3f031;
     padding: 10px 0;
 }
 
@@ -34,23 +39,34 @@ nav ul li a {
     font-weight: bold;
 }
 
+nav ul li a:hover {
+    color: #267ae9;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 main {
     padding: 20px;
 }
 
 form {
-    max-width: 400px;
+    max-width: 500px;
     margin: 20px auto;
     padding: 20px;
-    background: white;
+    background: #e3f031;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+input {
+    background: #eef3a3;
 }
 
 input, button {
-    display: block;
-    width: 100%;
+    width: 75%;
     margin: 10px 0;
     padding: 10px;
+    border-radius: 20px;
 }
 
 button {
@@ -58,10 +74,13 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    width: 30%;
 }
 
 button:hover {
     background-color: #0056b3;
+    width: 32%;
+
 }
 
 table {
