@@ -1,18 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - ImmuniTrack</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - ImmuniTrack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 1.5rem 2rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      width: 100%;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #007BFF;
+      object-fit: cover;
+    }
+    .user-details {
+      flex: 1;
+    }
+    .user-details h2 {
+      margin: 0 0 0.3rem 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+    .user-details p {
+      margin: 0;
+      color: #555;
+      font-size: 1rem;
+    }
+    section {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    section h3 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #007BFF;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    .appointment-date, .vaccine-date {
+      font-weight: 600;
+      color: #007BFF;
+      min-width: 120px;
+      text-align: right;
+    }
+    #logout-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      align-self: center;
+      margin-bottom: 2rem;
+      transition: background-color 0.3s ease;
+    }
+    #logout-btn:hover {
+      background-color: #b02a37;
+    }
+    @media (max-width: 600px) {
+      .user-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .user-avatar {
+        width: 100px;
+        height: 100px;
+      }
+      .user-details h2 {
+        font-size: 1.6rem;
+      }
+      .appointment-date, .vaccine-date {
+        min-width: auto;
+        text-align: left;
+        margin-top: 0.3rem;
+        font-size: 0.9rem;
+      }
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Dashboard</h1>
-    </header>
-    <main>
-        <p>Welcome to your dashboard. Here you can track your vaccination records, schedule appointments, and access analytics.</p>
-    </main>
-    <script src="script.js"></script>
+  <header>ImmuniTrack Dashboard</header>
+  <main>
+    <div class="user-info">
+      <img id="user-avatar" class="user-avatar" src="" alt="User Avatar" />
+      <div class="user-details">
+        <h2 id="welcome-msg">Welcome!</h2>
+        <p id="user-email">Email: </p>
+      </div>
+    </div>
+
+    <section>
+      <h3>Upcoming Appointments</h3>
+      <ul id="appointments">
+        <li>No upcoming appointments</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Vaccine Records</h3>
+      <ul id="vaccine-records">
+        <li>No vaccine records found</li>
+      </ul>
+    </section>
+
+    <button id="logout-btn">Logout</button>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
