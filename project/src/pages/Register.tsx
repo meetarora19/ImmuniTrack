@@ -1,0 +1,229 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Shield, UserPlus } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+
+const Register = () => {
+  const navigate = useNavigate();
+  const { register } = useAuth();
+  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    dob: '',
+    phone: '',
+  });
+  
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate form
+    if (!formData.name || !formData.email || !formData.password || !formData.dob || !formData.phone) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    
+    try {
+      setError('');
+      setIsLoading(true);
+      
+      const success = await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        dob: formData.dob,
+        phone: formData.phone,
+      });
+      
+      if (success) {
+        navigate('/dashboard');
+      } else {
+        setError('Failed to create account. Email may already be in use.');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12">
+      <div className="max-w-md w-full mx-auto p-6">
+        <div className="flex justify-center mb-8">
+          <div className="bg-white p-2 rounded-full shadow-md">
+            <Shield className="h-12 w-12 text-primary" />
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-md p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+            <p className="text-gray-600">Join ImmuniTrack to manage your vaccinations</p>
+          </div>
+          
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
+              {error}
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="input"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                id="dob"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                className="input"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="input"
+                placeholder="+91 XXXXX XXXXX"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="input"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            
+            <div className="mb-6">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="input"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            
+            <button
+              type="submit"
+              className="w-full btn btn-primary py-2 flex items-center justify-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <>
+                  <UserPlus className="h-5 w-5 mr-2" />
+                  <span>Create Account</span>
+                </>
+              )}
+            </button>
+            
+            <div className="text-center mt-6">
+              <p className="text-gray-600">
+                Already have an account?{' '}
+                <Link to="/login" className="text-primary hover:underline">
+                  Sign in
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
+        
+        <div className="text-center mt-6">
+          <div className="flex items-center justify-center">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" 
+              alt="Government of India"
+              className="h-10 mr-2"
+            />
+            <span className="text-gray-600 text-sm">
+              Associated with the Government of India
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
